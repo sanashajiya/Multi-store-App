@@ -46,5 +46,33 @@ class User {
 
   String toJson() => json.encode(toMap());
 
-  
+  // Deserialization: Convert a Map to a User object
+  // purpose - Manipuation and user: Once the data is converted to a User Object
+  // it can be easily manipulated and used within the application. for example
+  // we might want to display the user's fullName,email etc on the UI or we might 
+  // want to save the data locally
+
+
+  // the factory constructor takes a Map(Usually obtained from a json object)
+  // and converts it into a User object.if a field is not present in the map,
+  // it defaults to an empty string
+
+  // fromMap: this constructor take a Map<String,dynamic> and converts it into a User object
+  // its usefull when you already have the data in map format
+  factory User.fromMap(Map<String, dynamic> map){
+    return User(
+      id: map['_id'] as String? ?? '',
+      fullName: map['fullName'] as String? ?? '',
+      email: map['email'] as String? ?? '',
+      state: map['state'] as String? ?? '',
+      city: map['city'] as String? ?? '',
+      locality: map['locality'] as String? ?? '',
+      password: map['password'] as String? ?? '',
+    );
+  }
+
+  // fromJson: This factory constructor takes Json String, and decoded into a Map<String,dynamic>
+  // and then uses fromMap to convert that Map into a User object.
+
+  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String,dynamic>);
 }

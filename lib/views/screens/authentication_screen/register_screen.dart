@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:multi_store_app/controllers/auth_controller.dart';
-import 'dart:ui';
-
 import 'package:multi_store_app/views/screens/authentication_screen/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -20,27 +18,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String email = '';
   late String fullName = '';
   late String password = '';
-
-  // bool isLoading = false;
-  // registerUser() async {
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   await _authController
-  //       .signUpUsers(
-  //           context: context,
-  //           fullName: fullName,
-  //           email: email,
-  //           password: password)
-  //       .whenComplete(() {
-  //       // _formKey.currentState!.reset();
-  //     setState(() {
-        
-  //       isLoading = false;
-  //     });
-  //   });
-  // }
-
+  bool _isLoading = false;
+  registerUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    await _authController
+        .signUpUsers(
+          context: context,
+          email: email,
+          fullName: fullName,
+          password: password,
+        )
+        .whenComplete(() {
+          _formKey.currentState!.reset();
+          setState(() {
+            _isLoading = false;
+          });
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,20 +215,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     SizedBox(height: 20),
                     InkWell(
-                      onTap: () async {
+                      onTap: () {
                         if (_formKey.currentState!.validate()) {
-                          // registerUser();
-                          await _authController.signUpUsers(
-                            context: context,
-                            email: email,
-                            fullName: fullName,
-                            password: password,
-                          );
-                        //   print(email);
-                        //   print(fullName);
-                        //   print(password);
-                        // } else {
-                          // print('failed');
+                          registerUser();
                         }
                       },
                       child: Container(
@@ -274,7 +259,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //     child: Container(
                               //       width: 10,
                               //       height: 10,
-                          
+
                               //       clipBehavior: Clip.antiAlias,
                               //       decoration: BoxDecoration(
                               //         border: Border.all(width: 3),
@@ -283,7 +268,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               //       ),
                               //     ),
                               //     ),
-                          
+
                               //   ),
                               Positioned(
                                 left: 311,
@@ -293,7 +278,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Container(
                                     width: 5,
                                     height: 5,
-                          
+
                                     clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
                                       // border: Border.all(width: 3),
@@ -320,7 +305,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               Center(
-                                child: Text(
+                                child: _isLoading?CircularProgressIndicator(color: Colors.white,):Text(
                                   'Sign Up',
                                   style: GoogleFonts.getFont(
                                     'Lato',

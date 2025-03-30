@@ -28,6 +28,7 @@ class AuthController {
         city: '',
         locality: '',
         password: password,
+        token: '',
       );
 
       http.Response response = await http.post(

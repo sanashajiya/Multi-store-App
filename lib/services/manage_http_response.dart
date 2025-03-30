@@ -3,30 +3,47 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 void manageHttpResponse({
-  required http.Response response, // the HTTP response from the request
-  required BuildContext context, // the context is to show snackbar
-  required VoidCallback onSuccess, s, // the callback to execute on a successful response
+  required http.Response response,
+  required BuildContext context,
+  required VoidCallback onSuccess,
 }) {
-
   try {
-    Map<String, dynamic> responseBody = json.decode(response.body);
-     //Switch statement to handle http status code
+    // Print response details for debugging
+    print("Response Status Code: ${response.statusCode}");
+    print("Response Body: ${response.body}");
+
+    // Check if response body is empty
+    if (response.body.isEmpty) {
+      showSnackbar(context, "Unexpected empty response from server.");
+      return;
+    }
+
+    // Try parsing the response body as JSON
+    Map<String, dynamic> responseBody;
+    try {
+      responseBody = json.decode(response.body);
+    } catch (e) {
+      showSnackbar(context, "Invalid response format: ${response.body}");
+      return;
+    }
+
+    // Handle different status codes
     switch (response.statusCode) {
-      case 200:  // status code 200 indicates a successful request
-      case 201:  // status code 201 indicates a resource was created successfully
+      case 200:
+      case 201:
         onSuccess();
         break;
-      case 400:  //status code 400 indicates bad request
+      case 400:
         showSnackbar(context, responseBody['msg'] ?? "Bad Request");
         break;
-      case 500: //status code 500 indicates a server error
+      case 500:
         showSnackbar(context, responseBody['error'] ?? "Server error. Please try again later.");
         break;
       default:
-        showSnackbar(context, "Unexpected Error: \${response.statusCode} - \${response.body}");
+        showSnackbar(context, "Unexpected Error: ${response.statusCode} - ${response.body}");
     }
   } catch (e) {
-    showSnackbar(context, "Error parsing response: \${e.toString()}");
+    showSnackbar(context, "Error processing response: ${e.toString()}");
   }
 }
 

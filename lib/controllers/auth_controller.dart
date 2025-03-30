@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:multi_store_app/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:multi_store_app/global_variables.dart';
@@ -43,6 +45,38 @@ class AuthController {
       );
     } catch (e) {
       showSnackbar(context, "Error: ${e.toString()}");
+    }
+  }
+
+  // signin users functoin
+
+  Future<void> signInUsers({
+    required context,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$uri/api/signin'),
+        body: jsonEncode({
+          'email': email, //include the email in the request body,
+          'password': password, //include the password in the request body.
+        }),
+        headers: <String, String>{
+          //this will set the header
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      // Handle the response using manage_http_response
+      manageHttpResponse(
+        response: response,
+        context: context,
+        onSuccess: () {
+           showSnackbar(context, 'Logged In successfully!');
+        },
+      );
+    } catch (e) {
+      print('Error:  $e');
     }
   }
 }

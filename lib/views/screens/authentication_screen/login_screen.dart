@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:multi_store_app/controllers/auth_controller.dart';
 import 'dart:ui';
 
 import 'package:multi_store_app/views/screens/authentication_screen/register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  // const LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthController _authController = AuthController();
+  late String email;
+  late String password;
+  // const LoginScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +65,9 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   TextFormField(
+                    onChanged: (value) {
+                      email = value;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Email is required';
@@ -91,6 +102,9 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    onChanged: (value) {
+                      password = value;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Enter your password';
@@ -126,9 +140,13 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
                       if (_formKey.currentState!.validate()) {
-                        print('pass');
+                        await _authController.signInUsers(
+                          context: context,
+                          email: email,
+                          password: password,
+                        );
                       } else {
                         print('failed');
                       }
@@ -171,7 +189,7 @@ class LoginScreen extends StatelessWidget {
                           //     child: Container(
                           //       width: 10,
                           //       height: 10,
-            
+
                           //       clipBehavior: Clip.antiAlias,
                           //       decoration: BoxDecoration(
                           //         border: Border.all(width: 3),
@@ -180,7 +198,7 @@ class LoginScreen extends StatelessWidget {
                           //       ),
                           //     ),
                           //     ),
-            
+
                           //   ),
                           Positioned(
                             left: 311,
@@ -190,7 +208,7 @@ class LoginScreen extends StatelessWidget {
                               child: Container(
                                 width: 5,
                                 height: 5,
-            
+
                                 clipBehavior: Clip.antiAlias,
                                 decoration: BoxDecoration(
                                   // border: Border.all(width: 3),

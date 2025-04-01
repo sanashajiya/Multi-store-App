@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const authRouter = require('./routes/auth');
 const bannerRouter = require('./routes/banner');
+const categoryRouter = require('./routes/category');
 
 const PORT = 3000;
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors());  // Moved above to apply before routes
 app.use(express.json());
 app.use(authRouter);
 app.use(bannerRouter);
+app.use(categoryRouter);
 
 // Connect to MongoDB with error handling
 mongoose.connect(DB)

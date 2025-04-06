@@ -1,6 +1,5 @@
 const express = require('express');
 const SubCategory = require('../models/sub_category');
-const subCategory = require('../models/sub_category');
 const subCategoryRouter = express.Router();
 
 subCategoryRouter.post('/api/subCategories', async (req, res)=>{
@@ -23,7 +22,7 @@ subCategoryRouter.get('/api/subcategories', async (req, res)=>{
     }
 });
 
-subCategoryRouter.get('/api/category/:categoryName/subCategories', async (req, res)=>{
+subCategoryRouter.get('/api/category/:categoryName/subcategories', async (req, res)=>{
     try {
         // extract the categoryName from the request Url using Destructing
         const { categoryName } = req.params;

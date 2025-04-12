@@ -19,6 +19,7 @@ class AuthController {
     // if (email.isEmpty || fullName.isEmpty || password.isEmpty) {
     //   showSnackbar(context, "All fields are required!");
     //   return;
+    
     // }
 
     try {
@@ -87,6 +88,7 @@ class AuthController {
       );
     } catch (e) {
       print('Error:  $e');
+
     }
   }
 }

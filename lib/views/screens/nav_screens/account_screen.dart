@@ -1,14 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_cart/controllers/auth_controller.dart';
 
 class AccountScreen extends StatelessWidget {
-  const AccountScreen({super.key});
-
+  AccountScreen({super.key});
+  final AuthController _authController = AuthController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Account Screen"),
+        child: ElevatedButton(
+          onPressed: () {
+            _authController.signOutUsers(context: context);
+          },
+          child: Text('Signout'),
+        ),
       ),
     );
   }

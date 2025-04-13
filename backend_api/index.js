@@ -1,35 +1,46 @@
+// Import the express module
 const express = require('express');
 const mongoose = require('mongoose');
 const authRouter = require('./routes/auth');
+const cors = require('cors');
 const bannerRouter = require('./routes/banner');
 const categoryRouter = require('./routes/category');
-const subCategoryRouter = require('./routes/sub_category');
+const SubCategoryRouter = require('./routes/sub_category');
 const productRouter = require('./routes/product');
 const productReviewRouter = require('./routes/product_review');
-const cors = require('cors');
+const vendorRouter = require('./routes/vendor');
+const orderRouter = require('./routes/order');
+// Defined the port number the server should listen on
+const PORT = process.env.PORT || 3000;
+require('dotenv').config();
 
-const PORT = 3000;
+// Create an instance of an express application because it give us the starting point
 const app = express();
 
-// MongoDB connection string (move this to an environment variable later)
-const DB = 'mongodb+srv://sanashajiya:multistoreapp@cluster0.h4tfmnt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-// Middleware
+  
+app.use(cors());
+
+// This middleware function is executed for every request that comes into our server
 app.use(express.json());
-app.use(cors()); //enable cors for all routes and origin
-app.use(authRouter);
-app.use(bannerRouter);
+app.use(authRouter);   
+app.use(bannerRouter); 
 app.use(categoryRouter);
-app.use(subCategoryRouter);
+app.use(SubCategoryRouter);
 app.use(productRouter);
 app.use(productReviewRouter);
+app.use(vendorRouter);
+app.use(orderRouter);
+// app.use(cors()); //enable CORS for all routes and origin(domain),
 
-// Connect to MongoDB with error handling
-mongoose.connect(DB)
-    .then(() => console.log("MongoDB Connected"))
-    .catch(err => console.error("MongoDB Connection Error:", err));
+DB = process.env.MONGO_URI;
 
-// Start the server and listen on all interfaces
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server is running on port ${PORT}`);
+mongoose.connect(DB).then(
+    ()=>console.log("Connected to MongoDB..!")).
+    catch(error => console.error("MongoDB connection error: " + error));
+
+
+//Start the server and listen on specified port
+app.listen(PORT, "0.0.0.0",function(){
+    console.log(`Server is running on port http://localhost:${PORT}`);
 });

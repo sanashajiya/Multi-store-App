@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:multi_store_app/controllers/category_controller.dart';
-import 'package:multi_store_app/models/category.dart';
-import 'package:multi_store_app/views/screens/details/screens/widgets/inner_category_screen.dart';
-import 'package:multi_store_app/views/screens/nav_screens/widgets/reusable_text_widget.dart';
-
+import 'package:smart_cart/controllers/category_controller.dart';
+import 'package:smart_cart/models/category.dart';
+import 'package:smart_cart/views/screens/details/screens/inner_category_screen.dart';
+import 'package:smart_cart/views/screens/nav_screens/widgets/reusable_text_widget.dart';
 
 class CategoryItemWidget extends StatefulWidget {
   const CategoryItemWidget({super.key});
@@ -21,7 +20,7 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
   @override
   void initState() {
     super.initState();
-    futureCategories = CategoryController().loadCategories();
+    futureCategories = CategoryController().loadCateegories();
   }
 
   @override
@@ -69,6 +68,7 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
                                 width: 47,
                               ),
                               Text(
+                                overflow: TextOverflow.ellipsis,
                                 category.name,
                                 style: GoogleFonts.quicksand(
                                     fontWeight: FontWeight.bold, fontSize: 13),

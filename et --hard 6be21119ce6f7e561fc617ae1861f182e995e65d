@@ -1,0 +1,143 @@
+[33mcommit 6be21119ce6f7e561fc617ae1861f182e995e65d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmerge-friend[m[33m)[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sat Apr 12 23:46:22 2025 +0530
+
+    Push
+
+[33mcommit 1726b9d78aa65a317a81d74738453ef1a16b516f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sat Apr 12 23:22:11 2025 +0530
+
+    Inner Category Screen
+
+[33mcommit e32b0604b898a8c2788a70dfbc69361bb7d4b927[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sun Apr 6 11:16:03 2025 +0530
+
+    Display SubCategories
+
+[33mcommit 410f63cf1ea7d0ead70b8ecc680fa26f042e046a[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Fri Apr 4 19:01:02 2025 +0530
+
+    Implement category screen with category list and detail view
+
+[33mcommit 0146783c2a1555b7d553aaec42ae168681819db0[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Fri Apr 4 17:08:24 2025 +0530
+
+    Display Categories
+
+[33mcommit abea1fc2714c27c075c52d38c4265ee069e6523d[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Fri Apr 4 16:51:55 2025 +0530
+
+    Display Banners
+
+[33mcommit e1ed81de7dea977b5137ced14e9fba05bcb7178e[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Tue Apr 1 23:55:08 2025 +0530
+
+    Add review and rating system Api Endpoint - Backend
+
+[33mcommit 15c9195bfaf77305f709a0e2ea47bacb06d88c2e[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Tue Apr 1 21:59:48 2025 +0530
+
+    Add product Api Endpoint - Backend
+
+[33mcommit b2c9933a09f5f2ec51ca024056861be2d350bff1[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Tue Apr 1 19:37:50 2025 +0530
+
+    Add sub category Api Endpoint - Backend
+
+[33mcommit 181f5dda68a2b4e137a4f23d6586b938be3b18e3[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Tue Apr 1 18:50:52 2025 +0530
+
+    Add category Api Endpoint - Backend
+
+[33mcommit e0402460e72bca755b29693d5b95fb70b93917c2[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Tue Apr 1 18:27:22 2025 +0530
+
+    Add Banner Api Endpoint - Backend
+
+[33mcommit e259d071fd3150f008a2c9eed3cbed3d8c778d4d[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sun Mar 30 17:58:19 2025 +0530
+
+    Work On Home-Screen Front-end
+
+[33mcommit 7860dd9a3c2e7ceb512bf626075856b01b89c92f[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sun Mar 30 17:05:33 2025 +0530
+
+    Work on Main Screen Front-end
+
+[33mcommit 098526c2f04a8c254110c9e0c91cd063bf568337[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sun Mar 30 13:39:43 2025 +0530
+
+    Add loading indicator for authentication
+
+[33mcommit 050515f6ed0fd52b5ef56e31234b0c34dacb9c46[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sun Mar 30 13:05:18 2025 +0530
+
+    consume api - signin
+
+[33mcommit 22a1546542c7e0a526436b37e1160f686a87020a[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sun Mar 30 12:22:04 2025 +0530
+
+    consume api - signup
+
+[33mcommit 8449d621ebe614f8425ad053b369fd6e72bdb142[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sat Mar 29 17:16:16 2025 +0530
+
+    add factory constructor for User deserialization
+
+[33mcommit 9c0a28d6019382b8f0a7f2b61f3846bbb3d3fe02[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sat Mar 29 17:11:13 2025 +0530
+
+    serialize User Model
+
+[33mcommit 0773dd072740f46267b27424ee43b27d5edc890b[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Sat Mar 29 17:09:07 2025 +0530
+
+    create user model
+
+[33mcommit d6695bc157c4d87d19b69571ded0d37e97821075[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Fri Mar 28 12:39:34 2025 +0530
+
+    Add validation to  Login screen
+
+[33mcommit f30f463836aee4b513fcc5ae4a29159437b6f1ae[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Fri Mar 28 12:28:38 2025 +0530
+
+    Add validation to  Register screen
+
+[33mcommit e55ca85b57cf9f1c3c4f2f13098a84103dc115ae[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Fri Mar 28 11:18:25 2025 +0530
+
+    set up Register screen UI
+
+[33mcommit 471e469bd905629ad758260290c97c665a890f69[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Fri Mar 28 11:01:15 2025 +0530
+
+    set up login screen UI
+
+[33mcommit 71ebdce8f1242e42cca4c6d33703cbf0b54a07f6[m
+Author: sanashajiya <ssanashajiya@gmail.com>
+Date:   Thu Mar 27 16:44:34 2025 +0530
+
+    initial commit

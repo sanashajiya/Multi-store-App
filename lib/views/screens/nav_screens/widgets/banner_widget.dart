@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/controllers/banner_controller.dart';
-import 'package:multi_store_app/models/banner_model.dart';
+import 'package:smart_cart/controllers/banner_controller.dart';
+import 'package:smart_cart/models/banner_model.dart';
 
 class BannerWidget extends StatefulWidget {
   const BannerWidget({super.key});

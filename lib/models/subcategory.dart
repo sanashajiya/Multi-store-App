@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class Subcategory {
@@ -8,15 +9,15 @@ class Subcategory {
   final String subCategoryName;
 
   Subcategory({
-    required this.id,
-    required this.categoryId,
-    required this.categoryName,
-    required this.image,
-    required this.subCategoryName,
-  });
+    required this.id, 
+    required this.categoryId, 
+    required this.categoryName, 
+    required this.image, 
+    required this.subCategoryName
+    });
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'id': id,
       'categoryId': categoryId,
       'categoryName': categoryName,
@@ -24,16 +25,18 @@ class Subcategory {
       'subCategoryName': subCategoryName,
     };
   }
-
   String toJson() => json.encode(toMap());
-
   factory Subcategory.fromJson(Map<String, dynamic> map) {
     return Subcategory(
-      id: map['_id']?.toString() ?? '',
-      categoryId: map['categoryId']?.toString() ?? '',
-      categoryName: map['categoryName']?.toString() ?? '',
-      image: map['image']?.toString() ?? '',
-      subCategoryName: map['subCategoryName']?.toString() ?? '',
+      id: map['_id'] as String,
+      categoryId: map['categoryId'] as String,
+      categoryName: map['categoryName'] as String,
+      image: map['image'] as String,
+      subCategoryName: map['subCategoryName'] as String,
     );
   }
+
+  
+
+  // factory Subcategory.fromJson(String source) => Subcategory.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:multi_store_app/controllers/category_controller.dart';
-import 'package:multi_store_app/controllers/subcategory_controller.dart';
-import 'package:multi_store_app/models/category.dart';
-import 'package:multi_store_app/models/subcategory.dart';
-import 'package:multi_store_app/views/screens/details/screens/widgets/subcategory_tile_widget.dart';
-// import 'package:multi_store_app/views/screens/nav_screens/widgets/category_item_widget.dart';
-import 'package:multi_store_app/views/screens/nav_screens/widgets/header_widget.dart';
+import 'package:smart_cart/controllers/category_controller.dart';
+import 'package:smart_cart/controllers/subcategory_controller.dart';
+import 'package:smart_cart/models/category.dart';
+import 'package:smart_cart/models/subcategory.dart';
+import 'package:smart_cart/views/screens/details/screens/widgets/subcategory_tile_widget.dart';
+// import 'package:smart_cart/views/screens/nav_screens/widgets/category_item_widget.dart';
+import 'package:smart_cart/views/screens/nav_screens/widgets/header_widget.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -26,7 +26,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     super.initState();
-    futureCategories = CategoryController().loadCategories();
+    futureCategories = CategoryController().loadCateegories();
     //once the categories are loaded process then
     futureCategories.then((categories) {
       // iterate through the categories to find the "Fashion" category
@@ -51,8 +51,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
         .getSubcategoriesByCategoryName(categoryName);
     setState(() {
       _subcategories = subcategories;
-      print(subcategories);
-      print(categoryName);
+      // print(subcategories);
+      // print(categoryName);
     });
   }
 

@@ -1,26 +1,28 @@
 const express = require('express');
-const ProductReview = require('../models/product_review');
+const productReview= require('../models/product_review');
 
-const productReviewRouter = express.Router();
+const ProductReviewRouter = express.Router();
 
-productReviewRouter.post('/api/product-review',async (req, res)=>{
+ProductReviewRouter.post('/api/product-review',async (req, res) => {
     try {
-        const { buyerId, email, fullName, productId, review, rating } = req.body;
-        const reviews = new ProductReview({ buyerId, email, fullName, productId, review, rating });
-        await reviews.save();
-        return res.status(201).send(reviews);
+        const {buyerId, email, fullName, productId, rating, review} = req.body;
+        const productReviews = new productReview({buyerId, email, fullName, productId, rating, review});
+        await productReviews.save();
+        return res.status(201).send(productReviews);
     } catch (e) {
-        res.status(500).json({ "error": e.message });
+        res.status(500).json({error: e.message});
     }
+ 
 });
 
-productReviewRouter.get('/api/reviews', async (req,res)=>{
-    try {
-        const reviews = await ProductReview.find();
-        return res.status(200).json(reviews);
-    } catch (e) {
-        res.status(500).json({ "error": e.message });
-    }
-});
 
-module.exports = productReviewRouter;
+ProductReviewRouter.get('/api/reviews',async (req, res) => {
+    try {
+        const reviews = await productReview.find(); 
+        return res.status(200).send(reviews);
+    } catch (e) {
+        res.status(500).json({error: e.message});
+    }
+ 
+});
+module.exports = ProductReviewRouter

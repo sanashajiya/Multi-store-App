@@ -1,11 +1,10 @@
- const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
- const bannerSchema = mongoose.Schema({
+const bannerSchema = mongoose.Schema({
     image:{
         type: String,
         required: true
     }
- });
-
- const Banner = mongoose.model('Banner', bannerSchema);
- module.exports = Banner;
+});
+const Banner = mongoose.model('Banner', bannerSchema);
+module.exports = Banner;

@@ -1,11 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("FavoriteScreen")));
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Favorite Screen'),
+      ),
+      body: Center(
+        child: Text("Favorite Screen"),
+      ),
+    );
   }
 }

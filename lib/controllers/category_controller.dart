@@ -1,32 +1,34 @@
 import 'dart:convert';
+
+import 'package:smart_cart/global_variables.dart';
+import 'package:smart_cart/models/category.dart';
 import 'package:http/http.dart' as http;
-import 'package:multi_store_app/global_variables.dart';
-import 'package:multi_store_app/models/category.dart';
 
 class CategoryController {
-    // load the uploaded category
 
-  Future<List<Category>> loadCategories() async {
+  // load the uploaded categories from the database
+  Future<List<Category>> loadCateegories() async {
     try {
-      // send an http get request to load the category
-      http.Response response = await http.get(
-        Uri.parse('$uri/api/categories'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      );
-      print(response.body);
+      // send an http get request to load the categories
+      http.Response response = await http
+          .get(Uri.parse('$uri/api/categories'), headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      });
+      // print(response.body);
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
+        //OK
+        List<dynamic> data = jsonDecode(response.body);
         List<Category> categories =
-            data.map((category) => Category.fromJson(category)).toList();
-
+            data.map((item) => Category.fromJson(item)).toList();
         return categories;
       } else {
-        throw Exception('failed to load categories');
+        //throw an exception if the server responded with an error status code
+        throw Exception('Failed to load Categories: ');
       }
     } catch (e) {
-      throw Exception('Error loading categories');
+    //   print("Error loading banners: $e");
+    // print("StackTrace: $stacktrace");
+      throw Exception("Error Loading categories: ");
     }
   }
 }

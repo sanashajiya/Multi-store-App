@@ -9,8 +9,8 @@ final cartProvider =
   return CartNotifier();
 });
 
-// A notifier class to manage the cart state, eextending stateNotifier
-// with an initial state of an empty app
+// A notifier class to manage the cart state, extending stateNotifier
+// with an initial state of an empty map
 class CartNotifier extends StateNotifier<Map<String, Cart>> {
   CartNotifier() : super({});
 

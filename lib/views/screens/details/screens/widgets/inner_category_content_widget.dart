@@ -8,7 +8,7 @@ import 'package:smart_cart/models/product.dart';
 import 'package:smart_cart/models/subcategory.dart';
 import 'package:smart_cart/views/screens/details/screens/widgets/inner_banner_widget.dart';
 import 'package:smart_cart/views/screens/details/screens/widgets/inner_header_widget.dart';
-import 'package:smart_cart/views/screens/details/screens/widgets/product_item_widget.dart';
+import 'package:smart_cart/views/screens/nav_screens/widgets/product_item_widget.dart';
 import 'package:smart_cart/views/screens/details/screens/widgets/subcategory_tile_widget.dart';
 import 'package:smart_cart/views/screens/nav_screens/widgets/reusable_text_widget.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_cart/controllers/product_controller.dart';
 import 'package:smart_cart/models/product.dart';
-import 'package:smart_cart/views/screens/details/screens/widgets/product_item_widget.dart';
+import 'package:smart_cart/views/screens/nav_screens/widgets/product_item_widget.dart';
  
 class PopularProductWidget extends StatefulWidget {
   const PopularProductWidget({super.key});

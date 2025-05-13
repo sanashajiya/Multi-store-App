@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_cart/controllers/category_controller.dart';
 import 'package:smart_cart/models/category.dart';
+import 'package:smart_cart/providers/category_provider.dart';
 import 'package:smart_cart/views/screens/details/screens/inner_category_screen.dart';
 import 'package:smart_cart/views/screens/nav_screens/widgets/reusable_text_widget.dart';
 
-class CategoryItemWidget extends StatefulWidget {
+class CategoryItemWidget extends ConsumerStatefulWidget {
   const CategoryItemWidget({super.key});
 
   @override
-  State<CategoryItemWidget> createState() => _CategoryItemWidgetState();
+  ConsumerState<CategoryItemWidget> createState() => CategoryItemWidgetState();
 }
 
-class _CategoryItemWidgetState extends State<CategoryItemWidget> {
+class CategoryItemWidgetState extends ConsumerState<CategoryItemWidget> {
   // A future that will hold the list of categories once loaded from the API
 
   late Future<List<Category>> futureCategories;
@@ -20,29 +22,27 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
   @override
   void initState() {
     super.initState();
-    futureCategories = CategoryController().loadCateegories();
+    _fetchCategories();
+  }
+
+  void _fetchCategories() async {
+    final categoryController = CategoryController();
+    try {
+      final categories = await categoryController.loadCateegories();
+      ref.read(categoryProvider.notifier).setCategories(categories);
+    } catch (e) {
+      print('Error fetching categories: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final categories = ref.watch(categoryProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const ReusableTextWidget(title: 'Categories', subtitle: 'View all'),
-        FutureBuilder(
-            future: futureCategories,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                // print(snapshot);
-                return Center(
-                    child: Text('An error occurred: ${snapshot.error}'));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(child: Text('No categories available'));
-              } else {
-                final categories = snapshot.data!;
-                return GridView.builder(
+        GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: categories.length,
@@ -54,7 +54,8 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
                       final category = categories[index];
                       return InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
                             return InnerCategoryScreen(category: category);
                           }));
                         },
@@ -77,9 +78,7 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
                           ),
                         ),
                       );
-                    });
-              }
-            }),
+                    }),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_cart/controllers/auth_controller.dart';
+import 'package:smart_cart/views/screens/details/screens/order_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
@@ -9,10 +10,18 @@ class AccountScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: () {
-            _authController.signOutUsers(context: context);
+          onPressed: () async {
+            // await _authController.signOutUsers(context: context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return OrderScreen();
+                },
+              ),
+            );
           },
-          child: Text('Signout'),
+          child: Text('My Orders'),
         ),
       ),
     );

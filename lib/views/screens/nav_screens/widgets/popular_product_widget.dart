@@ -1,44 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_cart/controllers/product_controller.dart';
 import 'package:smart_cart/models/product.dart';
+import 'package:smart_cart/providers/product_provider.dart';
+// import 'package:smart_cart/views/screens/details/screens/widgets/product_item_widget.dart';
 import 'package:smart_cart/views/screens/nav_screens/widgets/product_item_widget.dart';
  
-class PopularProductWidget extends StatefulWidget {
+class PopularProductWidget extends ConsumerStatefulWidget {
   const PopularProductWidget({super.key});
 
   @override
-  State<PopularProductWidget> createState() => _PopularProductWidgetState();
+  ConsumerState<PopularProductWidget> createState() => _PopularProductWidgetState();
 }
 
-class _PopularProductWidgetState extends State<PopularProductWidget> {
+class _PopularProductWidgetState extends ConsumerState<PopularProductWidget> {
   // A Future that will hold the list of popular products
   late Future<List<Product>> futurePopularProducts;
   @override
   void initState() {
     super.initState();
-    futurePopularProducts = ProductController().loadPopularProducts();
+    _fetchProduct();
   }
 
+    Future<void> _fetchProduct() async{
+      final ProductController productController = ProductController();
+      try{
+        final products = await productController.loadPopularProducts();
+        ref.read(productProvider.notifier).setProducts(products);
+      }catch(e){
+        print('Error fetching products: $e');
+      }
+    }
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: futurePopularProducts,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error ${snapshot.error}'),
-            );
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
-              child: Text("No Popular Products"),
-            );
-          } else {
-            final products = snapshot.data;
-            return SizedBox(
+    final products = ref.watch(productProvider);
+    return SizedBox(
               height: 250,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -48,7 +44,5 @@ class _PopularProductWidgetState extends State<PopularProductWidget> {
                     return ProductItemWidget(product: product,);
                   }),
             );
-          }
-        });
   }
 }

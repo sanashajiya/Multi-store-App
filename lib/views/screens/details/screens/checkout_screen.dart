@@ -18,8 +18,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   final OrderController _orderController = OrderController();
   @override
   Widget build(BuildContext context) {
-    final cartData = ref.read(cartProvider);
-    final cartProvierObject = ref.read(cartProvider.notifier);
+    final cartData = ref.watch(cartProvider);
+    final _cartProvider = ref.read(cartProvider.notifier);
+    final user = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -85,7 +86,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                         child: SizedBox(
                                           width: 114,
                                           child: Text(
-                                            'Add Adress',
+                                            'Add Address',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -99,7 +100,16 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Text(
+                                        child: user!.state.isNotEmpty? 
+                                        Text(
+                                          user.state,
+                                          style: GoogleFonts.lato(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1.3,
+                                          ),
+                                        ):
+                                        Text(
                                           'United state',
                                           style: GoogleFonts.lato(
                                             fontSize: 14,
@@ -110,7 +120,16 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: Text(
+                                        child: user.city.isNotEmpty?
+                                        Text(
+                                          user.city,
+                                          style: GoogleFonts.lato(
+                                            color: const Color(0xFF7F808C),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                          ),
+                                        ):
+                                         Text(
                                           'Enter city',
                                           style: GoogleFonts.lato(
                                             color: const Color(0xFF7F808C),
@@ -338,7 +357,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ref.read(userProvider)!.state == ""
+        child: user!.state.isEmpty
             ? TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -361,7 +380,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     //pay with stripe to place the order
                   } else {
                     await Future.forEach(
-                        cartProvierObject.getCartItems().entries, (entry) {
+                        _cartProvider.getCartItems().entries, (entry) {
                       var item = entry.value;
                       _orderController.uploadOrders(
                           id: '',

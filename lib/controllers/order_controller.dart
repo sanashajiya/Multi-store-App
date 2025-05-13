@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:smart_cart/global_variables.dart';
 import 'package:smart_cart/models/order.dart';
 import 'package:http/http.dart' as http;
@@ -56,4 +58,36 @@ class OrderController {
       showSnackBar(context, e.toString());
     }
   }
+
+  // Method to GET Orders by buyerId
+  Future<List<Order>> loadOrders({required String buyerId}) async {
+    try {
+      // Send an HTTP GET request to the orders by the buyerId
+      http.Response response = await http.get(
+        Uri.parse('$uri/api/orders/$buyerId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+      );
+      // Check if the response status code is 200(OK)
+      if (response.statusCode == 200) {
+        // Parse the JSON response body into dynamic list
+        // This convert the json data into a formate that can be further processed in dart
+        List<dynamic> jsonData = jsonDecode(response.body);        
+        // Map the dynamic list  to list of Orders object using the fromJson factory method
+        // this step converts the raw data into a list of orders instances, which are easier to work with in the application
+        List<Order> orders = jsonData.map((order) => Order.fromJson(order)).toList();
+        // Return the list of orders
+        return orders;
+      }
+      // If the response status code is not 200, throw an exception
+      else {
+        throw Exception('Failed to load orders');
+      }
+    } catch (e) {      
+      // If an error occurs, print the error message
+      throw Exception('Error loading orders: $e');
+    }
+  }
+  
 }

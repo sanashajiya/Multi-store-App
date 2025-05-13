@@ -1,26 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_cart/controllers/banner_controller.dart';
 import 'package:smart_cart/models/banner_model.dart';
+import 'package:smart_cart/providers/banner_provider.dart';
 
-class BannerWidget extends StatefulWidget {
+class BannerWidget extends ConsumerStatefulWidget {
   const BannerWidget({super.key});
 
   @override
-  State<BannerWidget> createState() => _BannerWidgetState();
+  ConsumerState<BannerWidget> createState() => BannerWidgetState();
 }
 
-class _BannerWidgetState extends State<BannerWidget> {
-
-    //A Future that will hold the list of banners once loaded from the API
-  late Future<List<BannerModel>> futurebanners;
+class BannerWidgetState extends ConsumerState<BannerWidget> {
 
   @override
   void initState() {
     super.initState();
-    futurebanners = BannerController().loadBanners();
+    _fetchBanners();
   }
+
+  void _fetchBanners() async {
+    final bannerController = BannerController();
+    try{
+      final banners = await bannerController.loadBanners();
+      ref.read(bannerProvider.notifier).setBanners(banners);
+    }catch(e){
+      print('Error fetching banners: $e');
+    }
+  }
+    //A Future that will hold the list of banners once loaded from the API
+  late Future<List<BannerModel>> futurebanners;
+
   @override
   Widget build(BuildContext context) {
+    final banners = ref.watch(bannerProvider);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -30,19 +43,7 @@ class _BannerWidgetState extends State<BannerWidget> {
           color: Color(0xFFF7F7F7),
           borderRadius: BorderRadius.circular(4),
         ),
-        child: FutureBuilder(
-        future: futurebanners,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            // print(snapshot);
-            return Center(child: Text('An error occurred: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No banners available'));
-          } else {
-            final banners = snapshot.data!;
-            return PageView.builder(
+        child:  PageView.builder(
                 itemCount: banners.length,
                 itemBuilder: (context, index) {
                   final banner = banners[index];
@@ -55,9 +56,7 @@ class _BannerWidgetState extends State<BannerWidget> {
                       // width: 100,
                     ),
                   );
-                });
-          }
-        }),
+                }),
       ),
     );
   }

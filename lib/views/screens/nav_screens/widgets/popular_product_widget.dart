@@ -38,7 +38,7 @@ class _PopularProductWidgetState extends ConsumerState<PopularProductWidget> {
               height: 250,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: products!.length,
+                  itemCount: products.length,
                   itemBuilder: (context, index) {
                     final product = products[index];
                     return ProductItemWidget(product: product,);

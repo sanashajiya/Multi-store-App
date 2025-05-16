@@ -110,7 +110,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child:user!.state.isNotEmpty? Text(
+                                        child:user.state.isNotEmpty? Text(
                                           user.state,
                                           style: GoogleFonts.lato(
                                             fontSize: 14,

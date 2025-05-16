@@ -2,8 +2,7 @@
 import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:smart_cart/controllers/product_review_controller.dart';
-// import 'package:smart_cart/controllers/product_review_controller.dart';
+import 'package:smart_cart/controllers/product_review_controller.dart';
 import 'package:smart_cart/models/order.dart';
 
 class OrderDetailScreen extends StatefulWidget {
@@ -20,8 +19,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   double rating = 0.0;
 
-  // final ProductReviewController _productReviewController =
-  //     ProductReviewController();
+  final ProductReviewController _productReviewController =
+      ProductReviewController();
 
   @override
   Widget build(BuildContext context) {
@@ -309,16 +308,16 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                     actions: [
                                       TextButton(
                                         onPressed: () {
-                                          // final review = _reviewController.text;
+                                          final review = _reviewController.text;
 
-                                          // _productReviewController.uploadReview(
-                                          //     buyerId: widget.order.buyerId,
-                                          //     email: widget.order.email,
-                                          //     fullName: widget.order.fullName,
-                                          //     productId: widget.order.id,
-                                          //     rating: rating,
-                                          //     review: review,
-                                          //     context: context);
+                                          _productReviewController.uploadReview(
+                                              buyerId: widget.order.buyerId,
+                                              email: widget.order.email,
+                                              fullName: widget.order.fullName,
+                                              productId: widget.order.id,
+                                              rating: rating,
+                                              review: review,
+                                              context: context);
                                         },
                                         child: const Text(
                                           'Submit',

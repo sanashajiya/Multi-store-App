@@ -1,6 +1,8 @@
 // import 'package:custom_rating_bar/custom_rating_bar.dart';
+import 'package:custom_rating_bar/custom_rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:smart_cart/controllers/product_review_controller.dart';
 // import 'package:smart_cart/controllers/product_review_controller.dart';
 import 'package:smart_cart/models/order.dart';
 
@@ -293,21 +295,21 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                             labelText: 'Your Review',
                                           ),
                                         ),
-                                        // RatingBar(
-                                        //   filledIcon: Icons.star,
-                                        //   emptyIcon: Icons.star_border,
-                                        //   onRatingChanged: (value) {
-                                        //     rating = value;
-                                        //   },
-                                        //   initialRating: 2,
-                                        //   maxRating: 5,
-                                        // ),
+                                        RatingBar(
+                                          filledIcon: Icons.star,
+                                          emptyIcon: Icons.star_border,
+                                          onRatingChanged: (value) {
+                                            rating = value;
+                                          },
+                                          initialRating: 2,
+                                          maxRating: 5,
+                                        ),
                                       ],
                                     ),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
-                                          final review = _reviewController.text;
+                                          // final review = _reviewController.text;
 
                                           // _productReviewController.uploadReview(
                                           //     buyerId: widget.order.buyerId,

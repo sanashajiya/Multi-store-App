@@ -64,7 +64,7 @@ class OrderController {
     try {
       // Send an HTTP GET request to the orders by the buyerId
       http.Response response = await http.get(
-        Uri.parse('$uri/api/orders/$buyerId'),
+        Uri.parse('$uri/api/orders/buyers/$buyerId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
@@ -89,5 +89,26 @@ class OrderController {
       throw Exception('Error loading orders: $e');
     }
   }
-  
+
+  // delete order by ID
+  Future<void> deleteOrder({required String id, required context}) async {
+    try{
+      // send an HTTP DELETE request to the orders by the order ID
+      http.Response response = await http.delete(
+        Uri.parse('$uri/api/orders/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+      );
+
+      // handle the HTTP response
+      manageHttpResponse(response: response, context: context, onSuccess: (){
+        showSnackBar(context, "Order deleted successfully");
+      });
+   
+    }
+    catch(e){
+      throw Exception('Error deleting order: $e');
+    }
+  }
 }

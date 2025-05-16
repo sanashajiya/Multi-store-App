@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smart_cart/models/cart.dart';
-
+ 
 // Define a StateNotifierProvider to expose an instance of the CartNotifier
 // making it accessible within our app
 final cartProvider =
@@ -9,8 +9,8 @@ final cartProvider =
   return CartNotifier();
 });
 
-// A notifier class to manage the cart state, extending stateNotifier
-// with an initial state of an empty map
+// A notifier class to manage the cart state, eextending stateNotifier
+// with an initial state of an empty app
 class CartNotifier extends StateNotifier<Map<String, Cart>> {
   CartNotifier() : super({});
 

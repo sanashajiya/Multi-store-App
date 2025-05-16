@@ -5,8 +5,7 @@ import 'package:smart_cart/controllers/order_controller.dart';
 import 'package:smart_cart/models/order.dart';
 import 'package:smart_cart/providers/order_provider.dart';
 import 'package:smart_cart/providers/user_provider.dart';
-// import 'package:smart_cart/views/screens/details/screens/order_detail_screen.dart';
-import 'package:smart_cart/views/screens/details/screens/order_detail_screen.dart' show OrderDetailScreen;
+import 'package:smart_cart/views/screens/details/screens/order_detail_screen.dart';
 
 class OrderScreen extends ConsumerStatefulWidget {
   const OrderScreen({super.key});
@@ -38,10 +37,10 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
   Future<void> _deleteOrder(String orderId) async {
     final OrderController orderController = OrderController();
     try {
-      // await orderController.deleteOrder(id: orderId, context: context);
+      await orderController.deleteOrder(id: orderId, context: context);
       _fetchOrders(); //Refresh the list after deletion
     } catch (e) {
-      print("error deleting orer : $e");
+      print("error deleting order : $e");
     }
   }
 
@@ -316,10 +315,12 @@ class _OrderScreenState extends ConsumerState<OrderScreen> {
                                     ),
                                     Positioned(
                                       top: 115,
-                                      left: 298,
+                                      left: 285,
                                       child: InkWell(
                                         onTap: () {
+                                          print("order deleted");
                                           _deleteOrder(order.id);
+                                          print("order deleted");
                                         },
                                         child: Image.asset(
                                           'assets/icons/delete.png',

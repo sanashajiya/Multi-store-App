@@ -16,11 +16,12 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   String selectedPaymentMethod = 'stripe';
   final OrderController _orderController = OrderController();
+  
   @override
   Widget build(BuildContext context) {
-    final cartData = ref.watch(cartProvider);
-    final _cartProvider = ref.read(cartProvider.notifier);
     final user = ref.watch(userProvider);
+    final cartData = ref.read(cartProvider);
+    final cartProvierObject = ref.read(cartProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkout'),
@@ -85,17 +86,17 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                         alignment: Alignment.centerLeft,
                                         child: SizedBox(
                                           width: 114,
-                                          child: user!.state.isNotEmpty?
+                                          child: user!.state.isNotEmpty ? 
                                           Text(
-                                            'Address',
+                                            'Adress',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                               height: 1.1,
                                             ),
-                                          ):
+                                          ) : 
                                           Text(
-                                            'Add Address',
+                                            'Add Adress',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -109,16 +110,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: user.state.isNotEmpty? 
-                                        Text(
+                                        child:user!.state.isNotEmpty? Text(
                                           user.state,
                                           style: GoogleFonts.lato(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
                                             letterSpacing: 1.3,
                                           ),
-                                        ):
-                                        Text(
+                                        ): Text(
                                           'United state',
                                           style: GoogleFonts.lato(
                                             fontSize: 14,
@@ -129,8 +128,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child: user.city.isNotEmpty?
-                                        Text(
+                                        child: user.city.isNotEmpty? Text(
                                           user.city,
                                           style: GoogleFonts.lato(
                                             color: const Color(0xFF7F808C),
@@ -138,7 +136,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                             fontSize: 12,
                                           ),
                                         ):
-                                         Text(
+                                        Text(
                                           'Enter city',
                                           style: GoogleFonts.lato(
                                             color: const Color(0xFF7F808C),
@@ -366,7 +364,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: user!.state.isEmpty
+        child: user.state.isEmpty
             ? TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -389,7 +387,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     //pay with stripe to place the order
                   } else {
                     await Future.forEach(
-                        _cartProvider.getCartItems().entries, (entry) {
+                        cartProvierObject.getCartItems().entries, (entry) {
                       var item = entry.value;
                       _orderController.uploadOrders(
                           id: '',
@@ -407,7 +405,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           vendorId: item.vendorId,
                           processing: true,
                           delivered: false,
-                          context: context);
+                          context: context
+                        );
                     });
                   }
                 },

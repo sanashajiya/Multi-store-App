@@ -19,10 +19,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final cartProviderObject = ref.read(cartProvider.notifier);
-    final favoriteProviderData = ref.read(favoriteProvider.notifier);
-    ref.watch(favoriteProvider);
     final cartData = ref.watch(cartProvider);
     final isInCart = cartData.containsKey(widget.product.id);
+    final favoriteProviderData = ref.read(favoriteProvider.notifier);
+    ref.watch(favoriteProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(

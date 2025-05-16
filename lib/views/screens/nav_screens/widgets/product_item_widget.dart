@@ -63,9 +63,9 @@ class ProductItemWidget extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
             Text(
               product.productName,
               overflow: TextOverflow.ellipsis,
@@ -77,9 +77,27 @@ class ProductItemWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(
-              height: 4,
+            product.averageRating == 0? SizedBox() : Row(
+              children: [
+                Icon(
+                  Icons.star, 
+                  color: Colors.amber,
+                  size: 12,
+                  ),
+                  SizedBox(width: 4,),
+                  Text(
+                    product.averageRating.toStringAsFixed(1),
+                    style: GoogleFonts.quicksand(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+              ],
             ),
+            // const SizedBox(
+            //   height: 4,
+            // ),
             Text(
               product.category,
               style: GoogleFonts.quicksand(

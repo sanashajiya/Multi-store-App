@@ -133,6 +133,27 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               ),
             ),
           ),
+          widget.product.totalRatings == 0 ?
+           Text(''):Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: Row(
+              children: [
+               const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                Text(
+                  widget.product.averageRating.toString(),
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '(${widget.product.totalRatings.toString()})',
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

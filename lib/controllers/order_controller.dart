@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_cart/global_variables.dart';
 import 'package:smart_cart/models/order.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,8 @@ class OrderController {
       required bool delivered,
       required context}) async {
     try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? token = preferences.getString('auth_token');
       final Order order = Order(
           id: id,
           fullName: fullName,
@@ -45,7 +48,8 @@ class OrderController {
         Uri.parse('$uri/api/orders'),
         body: order.toJson(),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token' : token!,
         },
       );
       manageHttpResponse(
@@ -62,11 +66,14 @@ class OrderController {
   // Method to GET Orders by buyerId
   Future<List<Order>> loadOrders({required String buyerId}) async {
     try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? token = preferences.getString('auth_token');
       // Send an HTTP GET request to the orders by the buyerId
       http.Response response = await http.get(
         Uri.parse('$uri/api/orders/buyers/$buyerId'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token' : token!,
         },
       );
       // Check if the response status code is 200(OK)
@@ -93,11 +100,14 @@ class OrderController {
   // delete order by ID
   Future<void> deleteOrder({required String id, required context}) async {
     try{
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? token = preferences.getString('auth_token');
       // send an HTTP DELETE request to the orders by the order ID
       http.Response response = await http.delete(
         Uri.parse('$uri/api/orders/$id'),
         headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token' : token!,
         },
       );
 

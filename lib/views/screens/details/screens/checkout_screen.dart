@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_cart/controllers/order_controller.dart';
 import 'package:smart_cart/providers/cart_provider.dart';
 import 'package:smart_cart/providers/user_provider.dart';
+import 'package:smart_cart/services/manage_http_response.dart';
 import 'package:smart_cart/views/screens/details/screens/shipping_address_screen.dart';
+import 'package:smart_cart/views/screens/main_screen.dart';
 
 class CheckoutScreen extends ConsumerStatefulWidget {
   const CheckoutScreen({super.key});
@@ -16,30 +18,30 @@ class CheckoutScreen extends ConsumerStatefulWidget {
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   String selectedPaymentMethod = 'stripe';
   final OrderController _orderController = OrderController();
-  
+
   @override
   Widget build(BuildContext context) {
     final user = ref.watch(userProvider);
     final cartData = ref.read(cartProvider);
     final cartProvierObject = ref.read(cartProvider.notifier);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Checkout'),
-      ),
+      appBar: AppBar(title: const Text('Checkout')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 25,
-          vertical: 15,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ShippingAddressScreen();
-                  }));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return ShippingAddressScreen();
+                      },
+                    ),
+                  );
                 },
                 child: SizedBox(
                   width: 335,
@@ -55,11 +57,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           height: 74,
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            border: Border.all(
-                              color: const Color(
-                                0xFFEFF0F2,
-                              ),
-                            ),
+                            border: Border.all(color: const Color(0xFFEFF0F2)),
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
@@ -86,69 +84,79 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                         alignment: Alignment.centerLeft,
                                         child: SizedBox(
                                           width: 114,
-                                          child: user!.state.isNotEmpty ? 
-                                          Text(
-                                            'Adress',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              height: 1.1,
-                                            ),
-                                          ) : 
-                                          Text(
-                                            'Add Adress',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              height: 1.1,
-                                            ),
-                                          ),
+                                          child:
+                                              user!.state.isNotEmpty
+                                                  ? Text(
+                                                    'Adress',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      height: 1.1,
+                                                    ),
+                                                  )
+                                                  : Text(
+                                                    'Add Adress',
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      height: 1.1,
+                                                    ),
+                                                  ),
                                         ),
                                       ),
-                                      const SizedBox(
-                                        height: 4,
+                                      const SizedBox(height: 4),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child:
+                                            user.state.isNotEmpty
+                                                ? Text(
+                                                  user.state,
+                                                  style: GoogleFonts.lato(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 1.3,
+                                                  ),
+                                                )
+                                                : Text(
+                                                  'United state',
+                                                  style: GoogleFonts.lato(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 1.3,
+                                                  ),
+                                                ),
                                       ),
                                       Align(
                                         alignment: Alignment.centerLeft,
-                                        child:user.state.isNotEmpty? Text(
-                                          user.state,
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 1.3,
-                                          ),
-                                        ): Text(
-                                          'United state',
-                                          style: GoogleFonts.lato(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 1.3,
-                                          ),
-                                        ),
+                                        child:
+                                            user.city.isNotEmpty
+                                                ? Text(
+                                                  user.city,
+                                                  style: GoogleFonts.lato(
+                                                    color: const Color(
+                                                      0xFF7F808C,
+                                                    ),
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12,
+                                                  ),
+                                                )
+                                                : Text(
+                                                  'Enter city',
+                                                  style: GoogleFonts.lato(
+                                                    color: const Color(
+                                                      0xFF7F808C,
+                                                    ),
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
                                       ),
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: user.city.isNotEmpty? Text(
-                                          user.city,
-                                          style: GoogleFonts.lato(
-                                            color: const Color(0xFF7F808C),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                          ),
-                                        ):
-                                        Text(
-                                          'Enter city',
-                                          style: GoogleFonts.lato(
-                                            color: const Color(0xFF7F808C),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      )
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -169,9 +177,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                   height: 43,
                                   clipBehavior: Clip.hardEdge,
                                   decoration: BoxDecoration(
-                                    color: const Color(
-                                      0xFFFBF7F5,
-                                    ),
+                                    color: const Color(0xFFFBF7F5),
                                     borderRadius: BorderRadius.circular(100),
                                   ),
                                   child: Stack(
@@ -185,11 +191,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                           width: 26,
                                           'https://storage.googleapis.com/codeless-dev.appspot.com/uploads%2Fimages%2Fnn2Ldqjoc2Xp89Y7Wfzf%2F2ee3a5ce3b02828d0e2806584a6baa88.png',
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -202,14 +208,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           height: 20,
                           'https://firebasestorage.googleapis.com/v0/b/codeless-app.appspot.com/o/projects%2Fnn2Ldqjoc2Xp89Y7Wfzf%2F6ce18a0efc6e889de2f2878027c689c9caa53feeedit%201.png?alt=media&token=a3a8a999-80d5-4a2e-a9b7-a43a7fa8789a',
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
+              SizedBox(height: 10),
               Text(
                 'Your Item',
                 style: GoogleFonts.quicksand(
@@ -218,115 +222,103 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 ),
               ),
               Flexible(
-                  child: ListView.builder(
-                      itemCount: cartData.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final cartItem = cartData.values.toList()[index];
-                        return InkWell(
-                          onTap: () {},
-                          child: Container(
-                            width: 336,
-                            height: 91,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Color(0xFFEFF0F2)),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                Positioned(
-                                    left: 6,
-                                    top: 6,
-                                    child: SizedBox(
-                                      width: 311,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            width: 78,
-                                            height: 78,
-                                            clipBehavior: Clip.hardEdge,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xFFBCC5FF),
-                                            ),
-                                            child: Image.network(
-                                                cartItem.image[0]),
-                                          ),
-                                          SizedBox(
-                                            width: 11,
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              height: 78,
-                                              alignment: Alignment(0, -0.51),
-                                              child: SizedBox(
+                child: ListView.builder(
+                  itemCount: cartData.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    final cartItem = cartData.values.toList()[index];
+                    return InkWell(
+                      onTap: () {},
+                      child: Container(
+                        width: 336,
+                        height: 91,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Color(0xFFEFF0F2)),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              left: 6,
+                              top: 6,
+                              child: SizedBox(
+                                width: 311,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      width: 78,
+                                      height: 78,
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFBCC5FF),
+                                      ),
+                                      child: Image.network(cartItem.image[0]),
+                                    ),
+                                    SizedBox(width: 11),
+                                    Expanded(
+                                      child: Container(
+                                        height: 78,
+                                        alignment: Alignment(0, -0.51),
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              SizedBox(
                                                 width: double.infinity,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: double.infinity,
-                                                      child: Text(
-                                                        cartItem.productName,
-                                                        style: GoogleFonts
-                                                            .quicksand(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          letterSpacing: 1.3,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 4,
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                        cartItem.category,
-                                                        style: GoogleFonts.lato(
-                                                          color:
-                                                              Colors.blueGrey,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
+                                                child: Text(
+                                                  cartItem.productName,
+                                                  style: GoogleFonts.quicksand(
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 1.3,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
+                                              SizedBox(height: 4),
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                  cartItem.category,
+                                                  style: GoogleFonts.lato(
+                                                    color: Colors.blueGrey,
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            "\$${cartItem.productPrice.toStringAsFixed(2)}",
-                                            style: GoogleFonts.robotoSerif(
-                                                fontSize: 14,
-                                                color: Colors.pink,
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 1.3),
-                                          )
-                                        ],
+                                        ),
                                       ),
-                                    ))
-                              ],
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      "\$${cartItem.productPrice.toStringAsFixed(2)}",
+                                      style: GoogleFonts.robotoSerif(
+                                        fontSize: 14,
+                                        color: Colors.pink,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.3,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        );
-                      })),
-              SizedBox(
-                height: 10,
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
+              SizedBox(height: 10),
               Text(
                 "Choose Payment Method",
                 style: GoogleFonts.montserrat(
@@ -335,101 +327,114 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 ),
               ),
               RadioListTile<String>(
-                  title: Text(
-                    "Stripe",
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
-                  ),
-                  value: 'stripe',
-                  groupValue: selectedPaymentMethod,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedPaymentMethod = value!;
-                    });
-                  }),
+                title: Text(
+                  "Stripe",
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+                ),
+                value: 'stripe',
+                groupValue: selectedPaymentMethod,
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedPaymentMethod = value!;
+                  });
+                },
+              ),
               RadioListTile(
-                  title: Text(
-                    'Cash On Delivery',
-                    style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
-                  ),
-                  value: 'cashOnDelivery',
-                  groupValue: selectedPaymentMethod,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedPaymentMethod = value!;
-                    });
-                  })
+                title: Text(
+                  'Cash On Delivery',
+                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
+                ),
+                value: 'cashOnDelivery',
+                groupValue: selectedPaymentMethod,
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedPaymentMethod = value!;
+                  });
+                },
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: user.state.isEmpty
-            ? TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ShippingAddressScreen(),
+        child:
+            user.state.isEmpty
+                ? TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ShippingAddressScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Please Enter Shipping Address",
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      letterSpacing: 1.2,
                     ),
-                  );
-                },
-                child: Text(
-                  "Please Enter Shipping Address",
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    letterSpacing: 1.2,
                   ),
-                ))
-            : InkWell(
-                onTap: () async {
-                  if (selectedPaymentMethod == "stripe") {
-                    //pay with stripe to place the order
-                  } else {
-                    await Future.forEach(
-                        cartProvierObject.getCartItems().entries, (entry) {
-                      var item = entry.value;
-                      _orderController.uploadOrders(
-                          id: '',
-                          fullName: ref.read(userProvider)!.username,
-                          email: ref.read(userProvider)!.email,
-                          state: ref.read(userProvider)!.state,
-                          city: ref.read(userProvider)!.city,
-                          locality: ref.read(userProvider)!.locality,
-                          productName: item.productName,
-                          productPrice: item.productPrice,
-                          quantity: item.quantity,
-                          category: item.category,
-                          image: item.image[0],
-                          buyerId: ref.read(userProvider)!.id,
-                          vendorId: item.vendorId,
-                          processing: true,
-                          delivered: false,
-                          context: context
+                )
+                : InkWell(
+                  onTap: () async {
+                    if (selectedPaymentMethod == "stripe") {
+                      //pay with stripe to place the order
+                    } else {
+                      await Future.forEach(
+                        cartProvierObject.getCartItems().entries,
+                        (entry) {
+                          var item = entry.value;
+                          _orderController.uploadOrders(
+                            id: '',
+                            fullName: ref.read(userProvider)!.username,
+                            email: ref.read(userProvider)!.email,
+                            state: ref.read(userProvider)!.state,
+                            city: ref.read(userProvider)!.city,
+                            locality: ref.read(userProvider)!.locality,
+                            productName: item.productName,
+                            productPrice: item.productPrice,
+                            quantity: item.quantity,
+                            category: item.category,
+                            image: item.image[0],
+                            buyerId: ref.read(userProvider)!.id,
+                            vendorId: item.vendorId,
+                            processing: true,
+                            delivered: false,
+                            context: context,
+                          );
+                        },
+                      ).then((value) {
+                        cartProvierObject.clearCart();
+                        showSnackBar(context, "Order Successfully Placed");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen()),
                         );
-                    });
-                  }
-                },
-                child: Container(
-                  width: 338,
-                  height: 58,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF3854EE),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Text(
-                      selectedPaymentMethod == 'stripe'
-                          ? "Pay Now"
-                          : "Place Order",
-                      style: GoogleFonts.montserrat(
-                        color: Colors.white,
-                        fontSize: 18,
+                      });
+                    }
+                  },
+                  child: Container(
+                    width: 338,
+                    height: 58,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF3854EE),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: Text(
+                        selectedPaymentMethod == 'stripe'
+                            ? "Pay Now"
+                            : "Place Order",
+                        style: GoogleFonts.montserrat(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
       ),
     );
   }

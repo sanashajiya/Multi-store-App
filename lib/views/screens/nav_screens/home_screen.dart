@@ -10,11 +10,15 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SingleChildScrollView(
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(
+          MediaQuery.of(context).size.height * 0.2), 
+          child: HeaderWidget()),
+      body:const  SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 120, child: HeaderWidget()),
+            // HeaderWidget(),
             BannerWidget(),
             CategoryItemWidget(),
             ReusableTextWidget(

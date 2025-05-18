@@ -68,5 +68,65 @@ class ProductController {
     }
   }
 
+   Future<List<Product>> loadRelatedProducts(String productId) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$uri/api/related-products-by-subcategory/$productId'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      // print(response.body);
+      // print(productId);
+      if (response.statusCode == 200) {
+        //Decode the json response body into a list  of dynamic object
+        final List<dynamic> data = json.decode(response.body) as List<dynamic>;
+        //map each items in the list to product model object which we can use
+
+        List<Product> relatedProducts = data
+            .map((product) => Product.fromMap(product as Map<String, dynamic>))
+            .toList();
+        return relatedProducts;
+      } else if (response.statusCode == 404) {
+        return [];
+      } else {
+        //if status code is not 200 , throw an execption   indicating failure to load the popular products
+        throw Exception('Failed to load ralated products');
+      }
+    } catch (e) {
+      throw Exception('Error loading related product : $e');
+    }
+  }
+
+  // method to get top 10 highest-rated products
+  Future<List<Product>> loadTopRatedProducts() async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$uri/api/top-rated-products'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      if (response.statusCode == 200) {
+        //Decode the json response body into a list  of dynamic object
+        final List<dynamic> data = json.decode(response.body) as List<dynamic>;
+        //map each items in the list to product model object which we can use
+
+        List<Product> products = data
+            .map((product) => Product.fromMap(product as Map<String, dynamic>))
+            .toList();
+        return products;
+      } else if (response.statusCode == 404) {
+        return [];
+      } else {
+        //if status code is not 200 , throw an execption   indicating failure to load the popular products
+        throw Exception('Failed to load top rated products');
+      }
+    } catch (e) {
+      throw Exception('Error loading top product : $e');
+    }
+  }
+
+
   
 }

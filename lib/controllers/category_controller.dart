@@ -21,7 +21,10 @@ class CategoryController {
         List<Category> categories =
             data.map((item) => Category.fromJson(item)).toList();
         return categories;
-      } else {
+      } else if (response.statusCode == 404) {
+        return [];
+      } 
+      else {
         //throw an exception if the server responded with an error status code
         throw Exception('Failed to load Categories: ');
       }

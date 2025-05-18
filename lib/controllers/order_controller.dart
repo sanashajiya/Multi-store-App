@@ -86,6 +86,8 @@ class OrderController {
         List<Order> orders = jsonData.map((order) => Order.fromJson(order)).toList();
         // Return the list of orders
         return orders;
+      } else if (response.statusCode == 404) {
+        return [];
       }
       // If the response status code is not 200, throw an exception
       else {

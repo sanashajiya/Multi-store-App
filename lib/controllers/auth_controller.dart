@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_cart/providers/delivered_order_count_provider.dart';
 import 'package:smart_cart/providers/user_provider.dart';
 import 'package:smart_cart/services/manage_http_response.dart';
 import 'package:smart_cart/views/screens/authentication_screens/login_screen.dart';
@@ -10,11 +11,11 @@ import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import '../global_variables.dart';
 
-final providerContainer = ProviderContainer();
+// final providerContainer = ProviderContainer();
 
 class AuthController {
   Future<void> signUpUsers({
-    required context,
+    required BuildContext context,
     required String username,
     required String email,
     required String password,
@@ -55,9 +56,10 @@ class AuthController {
   }
 
   Future<void> signInUsers({
-    required context,
+    required  BuildContext context,
     required String email,
     required String password,
+    required WidgetRef ref,
   }) async {
     try {
       http.Response response = await http.post(
@@ -92,7 +94,8 @@ class AuthController {
 
           //Update the application state with the user data using Riverpod
           // Encode the user data received from the backened as json using Riverpod
-          providerContainer.read(userProvider.notifier).setUser(userJson);
+          ref.read(userProvider.notifier).setUser(userJson);
+          
 
           //store the data in sharedPrefernce for future use
           await preferences.setString('user', userJson);
@@ -111,14 +114,15 @@ class AuthController {
   }
 
   //SignOut
-  Future<void> signOutUsers({required context}) async {
+  Future<void> signOutUsers({required BuildContext context, required WidgetRef ref}) async {
     try {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       // Clear the stored token and user from SharedPreference
       await preferences.remove('auth_token');
       await preferences.remove('user');
       // Clear the user state
-      providerContainer.read(userProvider.notifier).signOut();
+      ref.read(userProvider.notifier).signOut();
+      ref.read(deliveredOrderCountProvider.notifier).resetCount();
       //Navigate the user back to the login screen
       Navigator.pushAndRemoveUntil(
         context,
@@ -134,11 +138,12 @@ class AuthController {
   // update user's state, city and locality
 
   Future<void> updateUserLocation({
-    required context,
+    required BuildContext context,
     required String id,
     required String state,
     required String city,
     required String locality,
+    required WidgetRef ref,
   }) async {
     try {
       // make an http request to update users state, city and locality
@@ -167,7 +172,7 @@ class AuthController {
 
           // update the application state with the updated user data useing Riverpod
           // this ensures the app reflects the most recent user data
-          providerContainer.read(userProvider.notifier).setUser(userJson);
+          ref.read(userProvider.notifier).setUser(userJson);
 
           // store the updated user data in shared preference for future use
           // this allows the app to retrieve the user data even after the app restarts
